@@ -1,31 +1,37 @@
-<?php $query = new WP_Query( 'pagename=services' ); $services_id = $query->queried_object->ID;
-            // The Loop
-            if ( $query->have_posts() ) { while ( $query->have_posts() ) { $query->the_post();
-                echo '<div class="col-sm-8 col-sm-offset-2 portfolio-title centertext">';
-                echo '<h1>' . get_the_title() . '</h1>';
-                echo '<p>' . the_content() . '</p>
-                      </div>';
-                }
-            }
-            wp_reset_postdata(); 
-       
-//Loop for the children
+/*-------------------------------------------------------------------
+    Return parent page ID or child as else. Add this to functions.php
+---------------------------------------------------------------------*/
 
-		$args = array( 'post_type' => 'page', 'post_parent' => $services_id );
-		$services_query = new WP_Query( $args );
-		
-		// The Loop
-		if ( $services_query->have_posts() ) {
-			echo '
-            <div class="col-md-10 col-md-offset-1">
-                <div class="row services-list">';
-			while ( $services_query->have_posts() ) { $services_query->the_post(); ?>
-                <!--the loop-->
-                <div class="col-sm-6">
-                    <div class="service-icon">
-                        <?php echo get_post_meta($post->ID, 'fontawesome', true); ?>
-                    </div>
-                    <h3><?php the_title();?></h3>
-                    <p><?php the_content();?></p>
-                </div> <!--End loop-->
-            <?php } } wp_reset_postdata(); ?>
+function get_top_parent_page_id() { 
+	global $post; 
+ 
+	if ($post->ancestors) { 
+		return end($post->ancestors); 
+	} else { 
+		return $post->ID; 
+	} 
+}
+
+
+<?php while ( have_posts() ) : the_post(); 
+    
+    //Add parent page slug into arguments
+    $query = new WP_Query('pagename=page_slug');
+    if ($query->have_posts() ){ while ($query->have_posts() ) { $query->the_post(); } }
+
+    //Get children by calling function in functions.php for the top parent id                  
+    $current_page_id = get_top_parent_page_id();
+    $args = array( 'post_type' => 'safaris', 'post_parent' => $current_page_id, 'orderby' => 'title', 'order' => 'ASC' );
+    $child_query = new WP_Query($args);
+
+    $i = 0; 
+    if ($child_query->have_posts() ){ while ($child_query->have_posts() ){ $child_query->the_post(); 
+    $i++; if( 1 == $i ) { ?>
+
+    <li role="presentation" class="active"><?php the_title(); ?></li>
+
+    <?php } else { ?>
+
+    <li role="presentation"><?php the_title(); ?></li>
+
+    <?php } } } wp_reset_postdata();  endwhile; ?>  
