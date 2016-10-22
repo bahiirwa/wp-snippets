@@ -1,0 +1,13 @@
+<?php 
+
+$categories = get_the_category(); 
+$separator = ' '; 
+$output = ''; 
+
+if ( ! empty( $categories ) ) { 
+	foreach( $categories as $category ) 
+		{ $output .= '' . esc_html( $category->name ) . '' . $separator; }
+
+ echo strtolower(trim( $output, $separator )); }
+
+?>

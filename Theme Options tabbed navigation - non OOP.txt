@@ -1,0 +1,140 @@
+<?php
+/*----------------------Echo the text in the template
+
+<?php 
+$footer_options = (array)get_option('footer_options'); $message = $footer_options['message']; if( 0 < strlen( trim( $footer_options['message'] ) ) ) { echo $message; } 
+?>
+------------------------------------------------*/
+
+-------------------------------*/
+
+/*----------------------Menus-------------------------------*/
+
+function demo_add_options_page() {
+    //browser title bar text , menu text, access,  The slug,  display fx, custom icon, position - last 2 optional
+	add_menu_page( 'Blend Theme', 'Blend Theme', 'manage_options', 'demo-theme-options', 'demo_theme_options_display', 'dashicons-id', 59 );
+	//Parent slug, browser title bar text, menu text, access, The slug, display fx
+	add_submenu_page( 'demo-theme-options',	'Header Options', 'Header Options', 'manage_options', 'header-options', 'demo_theme_options_display' );
+	
+	add_submenu_page( 'demo-theme-options', 'Footer Options', 'Footer Options', 'manage_options', 'footer-options', 'demo_theme_options_display' );
+
+} // end demo_add_options_page
+add_action( 'admin_menu', 'demo_add_options_page' );
+
+
+/*-----------------Sections, Settings, and Fields-------------------------------------------------------*/
+
+function demo_initialize_theme_options() {
+    //Section ID, title, fx, Page render ID
+    add_settings_section( 'header_section', 'Header Options', 'demo_theme_header_description_display', 'demo-theme-header-options' );
+	
+	// Field ID, Label, callback fx, Render page, section to add
+	add_settings_field( 'display_header', 'Display Header Text', 'demo_header_text_display', 'demo-theme-header-options', 'header_section');
+
+	//Section ID, title, fx, Page render ID
+	add_settings_section( 'footer_section', 'Footer Options', 'demo_theme_footer_description_display', 'demo-theme-footer-options' );
+
+    // Field ID, Label, callback fx, Render page, section to add
+    add_settings_field(  'footer_message', 'Theme Footer Message',  'demo_footer_message_display',  'demo-theme-footer-options', 'footer_section' );
+	
+	//Settings Name of group, Name of option, Optional sanitization cb leave blank qoutes for no sanitization
+	register_setting( 'header_section', 'header_options', '' );
+	register_setting( 'footer_section',	'footer_options', '' );
+	
+} // end demo_initialize_theme_options
+add_action( 'admin_init', 'demo_initialize_theme_options' );
+
+/*--------------------------Callbacks-----------------------------------------*/
+
+function demo_theme_options_display() {
+?>
+	<div class="wrap">
+		<div id="icon-options-general" class="icon32"></div>
+		<h2>Demo Theme Options</h2>
+		
+		<?php settings_errors(); ?>
+		
+		<?php if( isset( $_GET[ 'page' ] ) ) {
+			$active_tab = $_GET[ 'page' ];
+		} else if( $active_tab == 'header-options' ) {
+			$active_tab = 'header-options';
+		} else if( $active_tab == 'footer-options' ) {
+			$active_tab = 'footer-options';
+		} else {
+			$active_tab = 'header-options';
+		} // end if/else ?>
+		
+		<h2 class="nav-tab-wrapper">
+			<a href="?page=header-options" class="nav-tab <?php echo 'header-options' == $active_tab || 'demo-theme-options' == $active_tab ? 'nav-tab-active' : ''; ?>">Header Options</a>
+			<a href="?page=footer-options" class="nav-tab <?php echo 'footer-options' == $active_tab ? 'nav-tab-active' : ''; ?>">Footer options</a>
+		</h2>
+		
+		<form method="post" action="options.php">
+			<?php
+			
+				if( 'footer-options' == $active_tab ) {
+					settings_fields( 'footer_section' );
+					do_settings_sections( 'demo-theme-footer-options' );	
+				} else { 
+					settings_fields( 'header_section' );
+					do_settings_sections( 'demo-theme-header-options' );
+				}                    
+				// Add the submit button
+				submit_button(); 
+				
+			?>		
+		</form>
+	</div><!-- /.wrap -->
+<?php
+} // end demo_theme_options_display
+
+/**Renders the input field for the 'Header Display' setting. */
+function demo_header_text_display() {
+	
+	// Read the options for the footer message section 
+	$options = (array)get_option( 'header_options' );
+	$display = $options['display'];
+	
+	$html = '<label for="header_options[display]">';
+		$html .= '<input type="checkbox" name="header_options[display]" id="header_options[display]" value="1" ' . checked( 1, $display, false ) . ' />';
+		$html .= '&nbsp;';
+		$html .= 'Display the header text.';
+	$html .= '</label>';
+	
+	echo $html;
+	
+} // end demo_header_text_display
+
+/** Renders the description of the setting below the title of the header section and the above the actual settings */
+function demo_theme_header_description_display() {
+	echo "These options are designed to help you control whether or not you display your header.";
+} // end demo_header_text_display
+
+/**Renders the description of the setting below the title of the footer section and the above the actual settings. */
+function demo_theme_footer_description_display() {
+	echo "These options are designed to help you control what's displayed in your footer.";
+} // end demo_footer_options_display
+
+/** Renders the input field for the 'Footer Message' setting */
+function demo_footer_message_display() {
+
+	// Read the options for the footer message section 
+	$options = (array)get_option( 'footer_options' );
+	$message = $options['message'];
+
+	echo '<input type="text" name="footer_options[message]" id="footer_options[value]" value="' . $message . '" />';
+	
+} // end demo_footer_message_display
+
+/* Sanitizes the value that's saved in the header options. 
+function demo_sanitize_footer_options( $options ) { 
+	
+	$sanitized_options = array();
+	
+	foreach( $options as $option_key => $option_val ) {
+		$sanitized_options[ $option_key ] = strip_tags( stripslashes( $option_val ) );
+	} // end foreach
+	
+	return $sanitized_options;
+	
+} // end sanitize_header_options */

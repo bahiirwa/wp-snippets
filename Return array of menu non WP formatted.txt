@@ -1,0 +1,22 @@
+If you want to return an array of items (not output like wp_nav_menu), you can try this:
+
+$menu_name = 'your_menu_location';
+if ( ( $locations = get_nav_menu_locations() ) && isset( $locations[ $menu_name ] ) ) {
+    $menu = wp_get_nav_menu_object( $locations[ $menu_name ] );
+
+    $menu_items = wp_get_nav_menu_items($menu->term_id);
+
+    foreach ( (array) $menu_items as $key => $menu_item ) {
+        if ($menu_item->menu_item_parent != 0 ) continue;
+        $title = $menu_item->title;
+        $url = $menu_item->url;
+
+        DO WHAT EVER YOU WANT HERE 
+
+    }
+}   // endif has nav menu or not
+
+
+Look up if you get errors
+
+https://gist.github.com/hitautodestruct/4345363s

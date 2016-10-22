@@ -1,0 +1,3 @@
+echo slug name
+
+echo $slug = get_post_field( 'post_name', get_post() );

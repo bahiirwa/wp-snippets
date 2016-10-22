@@ -1,0 +1,216 @@
+Include jquery.isotope.min.js
+
+-----------------------------------------------------------
+HTML
+-----------------------------------------------------------
+<div id="filters">
+<select class="option-set clearfix"  data-filter-group="leuchtenart">
+    <option value="*" data-filter-value="" class="selected">Alle Leuchtenarten</option>
+    <option value="#filter-leuchtenart-canopy-leuchte" data-filter-value=".canopy-leuchte">Canopy Leuchte</option>
+    <option value="#filter-leuchtenart-flutlicht" data-filter-value=".flutlicht">Flutlicht</option>
+    <option value="#filter-leuchtenart-general-lights" data-filter-value=".general-lights">General Lights</option>
+    <option value="#filter-leuchtenart-high-bay-leuchte" data-filter-value=".high-bay-leuchte">High Bay Leuchte</option>
+    <option value="#filter-leuchtenart-rasterleuchte" data-filter-value=".rasterleuchte">Rasterleuchte</option>
+    <option value="#filter-leuchtenart-strassenflaechen-leuchte" data-filter-value=".strassenflaechen-leuchte">Straßen/Flächen Leuchte</option>
+    <option value="#filter-leuchtenart-tube" data-filter-value=".tube">Tube</option>
+    <option value="#filter-leuchtenart-tunnelhallen" data-filter-value=".tunnelhallen">Tunnel/Hallen</option>
+</select>
+
+<select class="filter option-set clearfix"  data-filter-group="lichtfarbe">
+    <option value="*" data-filter-value="" class="selected">Alle Lichtfarben</option>
+    <option value="#filter-lichtfarbe-coolwhite" data-filter-value=".coolwhite">Coolwhite</option>
+    <option value="#filter-lichtfarbe-purewhite" data-filter-value=".purewhite">Purewhite</option>
+    <option value="#filter-lichtfarbe-warmwhite" data-filter-value=".warmwhite">Warmwhite</option>
+</select>
+    <ul data-filter-group="leistung">
+        <li data-filter-value1="" data-filter-value="" class="selected">Alle Leistungen</li>
+<li data-filter-value1="#filter-leistung-w-100w" data-filter-value=".w-100w">5W-100W</li>
+<li data-filter-value1="#filter-leistung-02_101w-200w" data-filter-value=".02_101w-200w">101W-200W</li>
+<li data-filter-value1="#filter-leistung-03_201w-300w" data-filter-value=".03_201w-300w">201W-300W</li>
+<li data-filter-value1="#filter-leistung-04_ab-301w" data-filter-value=".04_ab-301w">ab 301W</li>
+    </ul>
+        
+</div>
+
+<div id="container">
+ <div class="produkt-element canopy-leuchte w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w warmwhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-100w purewhite">
+ </div>
+  <div class="produkt-element general-lights w-100w coolwhite">
+ </div>
+  <div class="produkt-element rasterleuchte w-100w warmwhite">
+ </div>
+  <div class="produkt-element tube w-100w purewhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w warmwhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-100w purewhite">
+ </div>
+  <div class="produkt-element general-lights w-100w coolwhite">
+ </div>
+  <div class="produkt-element rasterleuchte w-100w warmwhite">
+ </div>
+  <div class="produkt-element tube w-100w purewhite">
+ </div>
+  <div class="produkt-element canopy-leuchte 02-101w-200w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht 02_101w-200w warmwhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-200w purewhite">
+ </div>
+  <div class="produkt-element general-lights 02_101w-200w coolwhite">
+ </div>
+  <div class="produkt-element rasterleuchte w-100w warmwhite">
+ </div>
+  <div class="produkt-element tube w-100w purewhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-100w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht 03_201w-300w coolwhite">
+ </div>
+  <div class="produkt-element flutlicht w-100w warmwhite">
+ </div>
+  <div class="produkt-element canopy-leuchte w-100w purewhite">
+ </div>
+  <div class="produkt-element general-lights w-100w coolwhite">
+ </div>
+  <div class="produkt-element rasterleuchte w-100w warmwhite">
+ </div>
+  <div class="produkt-element tube w-100w purewhite">
+ </div>
+</div> 
+
+-----------------------------------------------------------
+CSS
+-----------------------------------------------------------
+
+body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+#container {
+    border: 1px solid;
+    padding: 3px;
+}
+
+.produkt-element {
+    width: 70px;
+    height: 70px;
+    margin: 3px;
+    float: left;
+}
+
+.flutlicht { background: red; }
+.w-100w { background: blue; }
+.coolwhite { background: green; }
+.warmwhite { background: yellow; }
+
+.purewhite {border-radius: 30px}
+.general-lights {border-radius: 10px}
+.rasterleuchte {border-radius: 20px}
+/* Start: Recommended Isotope styles */
+
+/**** Isotope Filtering ****/
+
+.isotope-item {
+    z-index: 2;
+}
+
+.isotope-hidden.isotope-item {
+    pointer-events: none;
+    z-index: 1;
+}
+
+/**** Isotope CSS3 transitions ****/
+
+.isotope,
+.isotope .isotope-item {
+    -webkit-transition-duration: 0.8s;
+    -moz-transition-duration: 0.8s;
+    transition-duration: 0.8s;
+}
+
+.isotope {
+    -webkit-transition-property: height, width;
+    -moz-transition-property: height, width;
+    transition-property: height, width;
+}
+
+.isotope .isotope-item {
+    -webkit-transition-property: -webkit-transform, opacity;
+    -moz-transition-property:    -moz-transform, opacity;
+    transition-property:         transform, opacity;
+}
+
+/**** disabling Isotope CSS3 transitions ****/
+
+.isotope.no-transition,
+.isotope.no-transition .isotope-item,
+.isotope .isotope-item.no-transition {
+    -webkit-transition-duration: 0s;
+    -moz-transition-duration: 0s;
+    transition-duration: 0s;
+}
+
+/* End: Recommended Isotope styles */
+ul li:hover { cursor:pointer}
+
+-----------------------------------------------------------
+JAVASCRIPT
+-----------------------------------------------------------
+$(function(){
+    
+  var $container = $('#container'),
+      filters = {};
+
+  $container.isotope({
+    itemSelector : '.produkt-element'
+  });
+
+  // filter buttons
+  $('select').change(function(){
+    var $this = $(this);
+    
+    // store filter value in object
+    // i.e. filters.color = 'red'
+    var group = $this.attr('data-filter-group');
+    
+    filters[ group ] = $this.find(':selected').attr('data-filter-value');
+    // console.log( $this.find(':selected') )
+    // convert object into array
+    var isoFilters = [];
+    for ( var prop in filters ) {
+      isoFilters.push( filters[ prop ] )
+    }
+    console.log(filters);
+    var selector = isoFilters.join('');
+    $container.isotope({ filter: selector });
+    return false;
+  });
+      
+      $('ul>li').click(function() {
+          var $this = $(this);
+          var group = $this.parent().data('filter-group');
+          filters[ group ] = $this.data('filter-value'); 
+          var isoFilters = [];
+            for ( var prop in filters ) {
+              isoFilters.push( filters[ prop ] )
+            }
+            console.log(filters);
+            var selector = isoFilters.join('');
+            $container.isotope({ filter: selector });
+            return false;
+      });
+
+});

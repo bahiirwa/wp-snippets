@@ -1,0 +1,10 @@
+/** Return parent page ID or child as else. */
+function get_top_parent_page_id() { 
+	global $post; 
+ 
+	if ($post->ancestors) { 
+		return end($post->ancestors); 
+	} else { 
+		return $post->ID; 
+	} 
+}
